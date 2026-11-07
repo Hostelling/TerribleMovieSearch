@@ -1,47 +1,21 @@
   package com.example.shittymoviesearch
 
 import android.os.Bundle
+import android.os.Looper
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.shittymoviesearch.ui.theme.ShittyMovieSearchTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import android.os.Handler
 
-class MainActivity : ComponentActivity() {
+  class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ShittyMovieSearchTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
+        //Displaying my custom screen for launch
+        setContentView(R.layout.launch)
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ShittyMovieSearchTheme {
-        Greeting("Android")
+        // After 3 seconds the app's main screen will load.
+        Handler(Looper.getMainLooper()).postDelayed({
+            setContentView(R.layout.main_screen)
+        }, 3000)
     }
 }
