@@ -9,37 +9,39 @@
         android:id="@+id/textView3"
         android:layout_width="140dp"
         android:layout_height="25dp"
-        android:text="Find your next movie  "
+        android:text="@string/find_your_next_movie"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.151"
+        tools:ignore="TextSizeCheck" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="89dp"
-        android:layout_height="48dp"
+        android:id="@+id/submitButton"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:text="Search"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginTop="25dp"
+        android:text="@string/search"
+        app:layout_constraintStart_toStartOf="@+id/movieInput"
+        app:layout_constraintTop_toBottomOf="@+id/movieInput" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/movieInput"
         android:layout_width="140dp"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
+        android:autofillHints=""
         android:ems="10"
+        android:hint="@string/type_here"
         android:inputType="text"
-        android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.157"
+        tools:ignore="VisualLintSystemUi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
