@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var movieInput: EditText
     private lateinit var submitButton: Button
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
