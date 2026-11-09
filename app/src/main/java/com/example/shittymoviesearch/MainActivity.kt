@@ -14,20 +14,11 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 
-
 class MainActivity : ComponentActivity() {
     private lateinit var titleText: TextView
     private lateinit var movieInput: EditText
     private lateinit var submitButton: Button
 
-    companion object {
-        private const val KEY_QUERY = "query"
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(KEY_QUERY, movieInput.text.toString())
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -37,9 +28,6 @@ class MainActivity : ComponentActivity() {
             // Rotated or recreated: Skip splash screen and load main screen immediately
             setContentView(R.layout.main_screen)
             initViews()
-            savedInstanceState.getString(KEY_QUERY)?.let {
-                movieInput.setText(it)
-            }
         } else {
             // Display splash screen for 3 seconds, then load main screen
             setContentView(R.layout.launch)
@@ -99,6 +87,5 @@ class MainActivity : ComponentActivity() {
             }
         )
         queue.add(request)
-
     }
 }
