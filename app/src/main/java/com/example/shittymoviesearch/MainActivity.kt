@@ -14,30 +14,50 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 
+
 class MainActivity : ComponentActivity() {
     private lateinit var titleText: TextView
     private lateinit var movieInput: EditText
     private lateinit var submitButton: Button
 
+    companion object {
+        private const val KEY_QUERY = "query"
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_QUERY, movieInput.text.toString())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        // Displaying my custom screen for launch
-        setContentView(R.layout.launch)
 
-        // After 3 seconds the app's main screen will load.
-        Handler(Looper.getMainLooper()).postDelayed({
+        if (savedInstanceState != null) {
+            // Rotated or recreated: Skip splash screen and load main screen immediately
             setContentView(R.layout.main_screen)
-
-            // Initialize views after main_screen.xml is set as content view
-            titleText = findViewById(R.id.textView3)
-            movieInput = findViewById(R.id.movieInput)
-            submitButton = findViewById(R.id.submitButton)
-
-            submitButton.setOnClickListener {
-                getData()
+            initViews()
+            savedInstanceState.getString(KEY_QUERY)?.let {
+                movieInput.setText(it)
             }
-        }, 3000)
+        } else {
+            // Display splash screen for 3 seconds, then load main screen
+            setContentView(R.layout.launch)
+            Handler(Looper.getMainLooper()).postDelayed({
+                setContentView(R.layout.main_screen)
+                initViews()
+            }, 3000)
+        }
+    }
+
+    private fun initViews() {
+        titleText = findViewById(R.id.textView3)
+        movieInput = findViewById(R.id.movieInput)
+        submitButton = findViewById(R.id.submitButton)
+
+        submitButton.setOnClickListener {
+            getData()
+        }
     }
 
     private fun getData() {
@@ -50,7 +70,7 @@ class MainActivity : ComponentActivity() {
             Request.Method.GET, url, null,
             { response ->
                 val found = response.optString("Response")
-                // if Response is true you will get a quick toast message, then you poster and title will load.
+                // if Response is true you will get a quick toast message, then your poster and title will load.
                 if (found == "True") {
                     Toast.makeText(this, "Yay! Here's your movie!", Toast.LENGTH_LONG).show()
                     val movies = response.optJSONArray("Search")
@@ -79,5 +99,6 @@ class MainActivity : ComponentActivity() {
             }
         )
         queue.add(request)
+
     }
 }

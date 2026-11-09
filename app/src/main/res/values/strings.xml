@@ -4,7 +4,4 @@
     <string name="search">Search</string>
     <string name="find_your_next_movie">Find your next movie</string>
     <string name="type_here">Type Here</string>
-    <string name="that_didnt_work">That didn\'t work</string>
-    <string name="welcome_message">Welcome to MoviesRUS!</string>
-    <string name="movie_icon_desc">Movie play icon</string>
 </resources>
