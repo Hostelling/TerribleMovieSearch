@@ -1,5 +1,6 @@
 package com.example.shittymoviesearch
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -45,17 +46,34 @@ class MainActivity : ComponentActivity() {
 
         val queue = Volley.newRequestQueue(this)
 
-
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->
                 val found = response.optString("Response")
+                // if Response is true you will get a quick toast message, then you poster and title will load.
                 if (found == "True") {
                     Toast.makeText(this, "Yay! Here's your movie!", Toast.LENGTH_LONG).show()
+                    val movies = response.optJSONArray("Search")
+                    val firstMovie = movies?.optJSONObject(0)
+
+                    if (firstMovie != null) {
+                        // Using these two to grab the title as well as the poster
+                        val moviename = firstMovie.optString("Title")
+                        val poster = firstMovie.optString("Poster")
+
+                        // Move onto screen 2, and put in the data from Title and poster.
+                        val nextScreen = Intent(this, SecondaryActivity::class.java).apply {
+                            putExtra("Title", moviename)
+                            putExtra("Poster", poster)
+                        }
+                        startActivity(nextScreen)
+                    }
+                    // If your movie isn't found.
                 } else if (found == "False") {
                     Toast.makeText(this, "Aww... we don't have your movie", Toast.LENGTH_LONG).show()
                 }
             },
+            // if there's any other error, such as a network error this will pop up as a toast message.
             {
                 Toast.makeText(this, "That didn't work", Toast.LENGTH_LONG).show()
             }
